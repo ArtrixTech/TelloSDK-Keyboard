@@ -39,15 +39,7 @@ def recv():
         except Exception:
             print ('\nExit . . .\n')
             break
-        k=cv2.waitKey(1)
-        if k & 0xFF == ord('a'):
-            sock.send("left 20")
-        if k & 0xFF == ord('s'):
-            sock.send("back 20")
-        if k & 0xFF == ord('w'):
-            sock.send("forward 20")
-        if k & 0xFF == ord('d'):
-            sock.send("right 20")
+
 
 
 #recvThread create
@@ -67,6 +59,15 @@ while True:
             sock.close()
             break
 
+        k = cv2.waitKey(1)
+        if k & 0xFF == ord('a'):
+            sock.sendto("left 20".encode(encoding="utf-8"), tello_address)
+        if k & 0xFF == ord('s'):
+            sock.sendto("back 20".encode(encoding="utf-8"), tello_address)
+        if k & 0xFF == ord('w'):
+            sock.sendto("forward 20".encode(encoding="utf-8"), tello_address)
+        if k & 0xFF == ord('d'):
+            sock.sendto("right 20".encode(encoding="utf-8"), tello_address)
         # Send data
         msg = msg.encode(encoding="utf-8")
         sent = sock.sendto(msg, tello_address)
@@ -74,11 +75,3 @@ while True:
         print ('\n . . .\n')
         sock.close()
         break
-
-
-
-
-
-while (1):
-
-
